@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - haste.lengman.se
+        - haste.karlman.net
       secretName: haste-tls
   rules:
-    - host: haste.lengman.se
+    - host: haste.karlman.net
       http:
         paths:
           - backend:
