@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: haste-server-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+  namespace: haste-server-space
+spec:
+  tls:
+    - hosts:
+        - haste.lengman.se
+      secretName: haste-tls
+  rules:
+    - host: haste.lengman.se
+      http:
+        paths:
+          - backend:
+              serviceName: haste-server-service
+              servicePort: 80
+            path: /
