@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: haste-server
+  namespace: haste-server-space
+spec:
+  selector:
+    matchLabels:
+      name: redis-pod
+      app: haste-server
+  template:
+    metadata:
+      name: redis-pod
+      labels:
+        name: redis-pod
+        app: haste-server
+    spec:
+      containers:
+        - image: redis
+          name: red
+          ports:
+            - protocol: TCP
+              containerPort: 6379
