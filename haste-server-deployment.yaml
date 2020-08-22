@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haste-server-deployment
+  labels:
+    name: haste-server-deployment
+    app: haste-server
+  namespace: haste-server-space
+spec:
+  selector:
+    matchLabels:
+      app: haste-server
+      name: haste-server-pod
+
+  template:
+    metadata:
+      name: haste-server-pod
+      labels:
+        app: haste-server
+        name: haste-server-pod
+    spec:
+      containers:
+        - image: emilen/haste-server
+          name: haste-server-container
+          ports:
+            - containerPort: 7777
+              protocol: TCP
+          env:
+            - name: STORAGE_TYPE
+              value: redis
+            - name: STORAGE_HOST
+              value: redis-service
+            - name: STORAGE_PORT
+              value: '6379'
+            - name: STORAGE_DB
+              value: '2'
