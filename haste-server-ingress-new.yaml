@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: haste-server-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
+  namespace: karlman-haste-server-space
+spec:
+  tls:
+    - hosts:
+        - haste.karlman.net
+      secretName: haste-tls
+  rules:
+    - host: "haste.karlman.net"
+      http:
+        paths:
+          - backend:
+              service:
+                name: haste-server-service
+                port:
+                  number: 80
+            path: "/"
+            pathType: Prefix
